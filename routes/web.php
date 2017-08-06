@@ -16,4 +16,3 @@ Route::get('/twitter/callback', 'TwitterLoginController@handleProviderCallback')
 
 Route::get('/google/login', 'GoogleLoginController@redirectToProvider');
 Route::get('/google/callback', 'GoogleLoginController@handleProviderCallback');
-

@@ -9,6 +9,8 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
 {
+    use ProviderCallbackHandler;
+
     public function redirectToProvider()
     {
         return Socialite::driver('google')->redirect();
@@ -16,22 +18,7 @@ class GoogleLoginController extends Controller
 
     public function handleProviderCallback()
     {
-        $googleUser = Socialite::driver('google')->user();
-
-        $user = User::where('google_id', $googleUser->getId())->first();
-        if (!$user)
-            $user = new User();
-
-        $user->google_id = $googleUser->getId();
-        // $googleUser->getNickname();
-        $user->name = $googleUser->getName();
-        $user->email = $googleUser->getEmail();
-        $user->social_image = $googleUser->getAvatar();
-        $user->password = '';
-        $user->save();
-
-        Auth::login($user);
-        return redirect('/home');
+        return $this->handleCallback('google');
     }
 
 }

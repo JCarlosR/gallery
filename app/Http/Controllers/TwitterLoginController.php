@@ -9,6 +9,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class TwitterLoginController extends Controller
 {
+    use ProviderCallbackHandler;
 
     public function redirectToProvider()
     {
@@ -17,21 +18,7 @@ class TwitterLoginController extends Controller
 
     public function handleProviderCallback()
     {
-        $twitterUser = Socialite::driver('twitter')->user();
-
-        $user = User::where('twitter_id', $twitterUser->getId())->first();
-        if (!$user)
-            $user = new User();
-
-        $user->twitter_id = $twitterUser->getId();
-        $user->name = $twitterUser->getName();
-        $user->email = $twitterUser->getEmail();
-        $user->social_image = $twitterUser->getAvatar();
-        $user->password = '';
-        $user->save();
-
-        Auth::login($user);
-        return redirect('/home');
+        return $this->handleCallback('twitter');
     }
 
 }

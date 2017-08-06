@@ -14,7 +14,7 @@ class AddSocialImageToUsers extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('social_image');
+            $table->string('social_image')->nullable();
         });
     }
 
