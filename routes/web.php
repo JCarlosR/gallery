@@ -16,3 +16,18 @@ Route::get('/twitter/callback', 'TwitterLoginController@handleProviderCallback')
 
 Route::get('/google/login', 'GoogleLoginController@redirectToProvider');
 Route::get('/google/callback', 'GoogleLoginController@handleProviderCallback');
+
+// Gallery
+Route::get('/galleries/create', 'GalleryController@create');
+Route::post('/galleries', 'GalleryController@store');
+Route::get('/galleries/{id}', 'GalleryController@show');
+
+// Photo
+Route::post('/photos', 'PhotoController@store');
+Route::get('/photos/{id}/edit', 'PhotoController@edit');
+Route::post('/photos/{id}', 'PhotoController@update');
+Route::get('/photos/{id}/delete', 'PhotoController@delete');
+
+// Public access
+Route::get('/@{username}', 'GuestController@show');
+// Route::get('/{username}', 'GuestController@show');
