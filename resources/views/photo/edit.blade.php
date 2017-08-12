@@ -33,6 +33,9 @@
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-success">Guardar cambios</button>
+                                <a class="btn btn-default" href="/galleries/{{ $photo->gallery_id }}">
+                                    Volver sin guardar
+                                </a>
                             </div>
                         </form>
                     </div>

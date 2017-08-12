@@ -27,10 +27,10 @@
                     <a href="/galleries/create" class="btn btn-primary">Nueva galería</a>
 
                     <ul>
-                        @foreach ($galleries as $gallery)
+                        @foreach ($galleries as $key => $gallery)
                             <li>
-                                <a href="/galleries/{{ $gallery->id }}">
-                                    {{ $gallery->name }}
+                                <a href="/galleries/{{ $key }}">
+                                    {{ $gallery }}
                                 </a>
                             </li>
                         @endforeach
