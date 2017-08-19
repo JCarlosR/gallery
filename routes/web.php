@@ -29,5 +29,6 @@ Route::post('/photos/{id}', 'PhotoController@update');
 Route::get('/photos/{id}/delete', 'PhotoController@delete');
 
 // Public access
-Route::get('/@{username}', 'GuestController@show');
-// Route::get('/{username}', 'GuestController@show');
+Route::post('/photos/{id}/comments', 'CommentController@store');
+Route::get('/@{username}/photos/{id}', 'Guest\PhotoController@show');
+Route::get('/@{username}', 'Guest\ProfileController@show');

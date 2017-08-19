@@ -35,8 +35,10 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">{{ $photo->name }}</div>
                                     <div class="panel-body">
-                                        <img src="/images/photos/{{ $photo->file_name }}"
+                                        <a href="/{{ '@' . $user->username }}/photos/{{ $photo->id }}">
+                                            <img src="/images/photos/{{ $photo->file_name }}"
                                              alt="Foto {{ $photo->description }}" class="img-responsive">
+                                        </a>
                                     </div>
                                 </div>
                             </div>

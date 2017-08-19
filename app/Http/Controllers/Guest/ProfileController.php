@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 
-class GuestController extends Controller
+class ProfileController extends Controller
 {
     public function show($username)
     {
@@ -14,13 +15,13 @@ class GuestController extends Controller
             return redirect('/');
 
         $galleries = $user->galleries()->with(['photos' => function ($query) {
-            $query->select(['file_name', 'name', 'description', 'gallery_id']);
+            $query->select(['id', 'file_name', 'name', 'description', 'gallery_id']);
         }])->get();
         // Gallery::where('user_id', $user->id)->get();
 
         // Book::all();
         // Book::with('author')->get();
 
-        return view('guest.user.profile')->with(compact('user', 'galleries'));
+        return view('guest.profile.show')->with(compact('user', 'galleries'));
     }
 }
