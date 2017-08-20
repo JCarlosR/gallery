@@ -21,6 +21,8 @@ Route::get('/google/callback', 'GoogleLoginController@handleProviderCallback');
 Route::get('/galleries/create', 'GalleryController@create');
 Route::post('/galleries', 'GalleryController@store');
 Route::get('/galleries/{id}', 'GalleryController@show');
+Route::get('/galleries/{id}/edit', 'GalleryController@edit');
+Route::post('/galleries/{id}/edit', 'GalleryController@update');
 
 // Photo
 Route::post('/photos', 'PhotoController@store');

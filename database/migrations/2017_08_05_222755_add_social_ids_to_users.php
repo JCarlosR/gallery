@@ -28,9 +28,9 @@ class AddSocialIdsToUsers extends Migration
     public function down()
     {
         Schema::table('users', function($table) {
-            $table->dropColumn('facebook_id');
-            $table->dropColumn('twitter_id');
-            $table->dropColumn('google_id');
+            $table->dropColumn([
+                'facebook_id', 'twitter_id', 'google_id'
+            ]);
         });
     }
 }

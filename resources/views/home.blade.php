@@ -26,15 +26,29 @@
                 <div class="panel-body">
                     <a href="/galleries/create" class="btn btn-primary">Nueva galería</a>
 
-                    <ul>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach ($galleries as $key => $gallery)
-                            <li>
-                                <a href="/galleries/{{ $key }}">
-                                    {{ $gallery }}
-                                </a>
-                            </li>
+                            <tr>
+                                <td>{{ $gallery }}</td>
+                                <td>
+                                    <a href="/galleries/{{ $key }}" class="btn btn-sm btn-primary">
+                                        Ver
+                                    </a>
+                                    <a href="/galleries/{{ $key }}/edit" class="btn btn-sm btn-success">
+                                        Editar
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -22,3 +22,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Gallery::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->sentence
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Photo::class, function (Faker\Generator $faker) {
+    return [
+        'file_name' => $faker->randomNumber() . 'jpg',
+        'name' => $faker->name,
+        'description' => $faker->sentence
+    ];
+});
