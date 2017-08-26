@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('inspire')->everyMinute();
+        $schedule->exec('echo "" > /var/www/gallery/storage/logs/laravel.log')->everyFiveMinutes();
     }
 
     /**
