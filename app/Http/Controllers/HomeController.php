@@ -18,9 +18,9 @@ class HomeController extends Controller
         // DB::enableQueryLog();
 
         // SELECT * FROM galleries WHERE user_id = $_SESSION['user_id']
-        $galleries = auth()->user()->galleries()->pluck('name', 'id');
+        // $galleries = auth()->user()->galleries()->pluck('name', 'id');
         // dd($galleries);
         // dd(DB::getQueryLog());
-        return view('home')->with(compact('galleries'));
+        return view('home'); // ->with(compact('galleries'));
     }
 }

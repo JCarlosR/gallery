@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel-galleries">
                 <div class="panel-heading">Galerías</div>
 
                 <div class="panel-body">
@@ -34,19 +34,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($galleries as $key => $gallery)
-                            <tr>
-                                <td>{{ $gallery }}</td>
+                            <tr v-for="gallery in galleries">
+                                <td>@{{ gallery.name }}</td>
                                 <td>
-                                    <a href="/galleries/{{ $key }}" class="btn btn-sm btn-primary">
+                                    <a v-bind:href="'galleries/'+gallery.id" class="btn btn-sm btn-primary">
                                         Ver
                                     </a>
-                                    <a href="/galleries/{{ $key }}/edit" class="btn btn-sm btn-success">
+                                    <a v-bind:href="'galleries/'+gallery.id+'/edit'" class="btn btn-sm btn-success">
                                         Editar
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -54,4 +52,21 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(function () {
+            $.get('/galleries', function (data) {
+                // console.log(data);
+                v.galleries = data;
+            });
+        });
+        const v = new window.Vue({
+            el: '#panel-galleries',
+            data: {
+                galleries: []
+            }
+        });
+    </script>
 @endsection

@@ -34,3 +34,6 @@ Route::get('/photos/{id}/delete', 'PhotoController@delete');
 Route::post('/photos/{id}/comments', 'CommentController@store');
 Route::get('/@{username}/photos/{id}', 'Guest\PhotoController@show');
 Route::get('/@{username}', 'Guest\ProfileController@show');
+
+// API without auth
+Route::get('/galleries', 'Api\GalleryController@index');
