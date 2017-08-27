@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
         <div class="row">
 
             <div class="col-md-8 col-md-offset-2">
@@ -25,23 +25,22 @@
             </div>
 
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-default" id="panel-photo-comments">
                     <div class="panel-heading">Comentarios de la foto</div>
 
                     <div class="panel-body">
                         <ul class="list-group">
-                            @foreach ($photo->comments as $comment)
-                            <li class="list-group-item">
-                                <img src="{{ $comment->user->social_image }}" alt="Imagen de perfil" class="img-sm img-circle">
-                                <p>{{ $comment->user->name }}</p>
-                                <p>{{ $comment->content }}</p>
+                            <li v-for="comment in comments" class="list-group-item">
+                                <img v-bind:src="comment.user.social_image" alt="Imagen de perfil" class="img-sm img-circle">
+                                <p>@{{ comment.user.name }}</p>
+                                <p>@{{ comment.content }}</p>
                             </li>
-                            @endforeach
+
                             <li class="list-group-item" id="item-new-comment">
-                                <form action="/photos/{{ $photo->id }}/comments" method="post">
+                                <form method="post" v-on:submit.prevent="onSubmit">
                                     {{ csrf_field() }}
                                     <div class="input-group">
-                                        <input type="text" name="content" class="form-control" placeholder="Escribe un mensaje ..." aria-describedby="basic-button">
+                                        <input v-model="content" type="text" name="content" class="form-control" placeholder="Escribe un mensaje ..." aria-describedby="basic-button">
                                         <span class="input-group-btn" id="basic-button">
                                             <button class="btn btn-primary">Enviar</button>
                                         </span>
@@ -59,16 +58,39 @@
 
 @section('scripts')
     <script>
+        $(function () {
+            $.get('/photos/{{ $photo->id }}/comments', function (data) {
+                // console.log(data);
+                v.comments = data;
+            });
+        });
+
+        const v = new window.Vue({
+            el: '#panel-photo-comments',
+            data: {
+                comments: [],
+                content: ''
+            },
+            methods: {
+                onSubmit: function (event) {
+                    axios.post('/photos/{{ $photo->id }}/comments', {
+                        content: v.content
+                    }).then(function (response) {
+                        if (response.data.success) {
+                            v.content = '';
+                        } else {
+                            alert('Hubo un error');
+                        }
+                    });
+                }
+            }
+        });
+
         window.Echo.channel('comments').listen('CommentCreated', function (data) {
             // console.log(data);
-            const comment = data.comment;
-            const user = data.user;
-            var commentHtml = '<li class="list-group-item">';
-            commentHtml += '<img src="'+user.social_image+'" alt="Imagen de perfil" class="img-sm img-circle">';
-            commentHtml += '<p>'+user.name+'</p>';
-            commentHtml += '<p>'+comment.content+'</p>';
-            commentHtml += '</li>';
-            $('#item-new-comment').before(commentHtml);
+            let comment = data.comment;
+            comment.user = data.user;
+            v.comments.push(comment);
         });
     </script>
 @endsection

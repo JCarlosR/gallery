@@ -14,10 +14,12 @@ class CommentController extends Controller
         $comment->user_id = auth()->user()->id;
         $comment->photo_id = $id;
         $comment->content = $request->input('content');
-        $comment->save();
+        $saved = $comment->save();
 
         event(new CommentCreated($comment));
 
-        return back();
+        $data = [];
+        $data['success'] = $saved;
+        return $data;
     }
 }

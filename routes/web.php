@@ -37,3 +37,4 @@ Route::get('/@{username}', 'Guest\ProfileController@show');
 
 // API without auth
 Route::get('/galleries', 'Api\GalleryController@index');
+Route::get('/photos/{id}/comments', 'Api\CommentController@index');
